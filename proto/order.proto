@@ -4,7 +4,7 @@ package main;
 
 import "user/user.proto";
 
-option go_package = "/proto/gen;mainpb";
+option go_package = "/proto/pb;mainpb";
 
 message Order {
   string id = 1;

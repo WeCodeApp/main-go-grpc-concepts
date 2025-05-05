@@ -13,8 +13,9 @@ service Greeter {
 }
 
 message HelloRequest {
-  string name = 1;
-  int32 age = 2;
+  reserved 15, 9 to 11;
+  optional string name = 1;
+  repeated int32 age = 2;
 }
 
 message HelloResponse {
