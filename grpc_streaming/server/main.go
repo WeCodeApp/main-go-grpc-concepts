@@ -1,11 +1,15 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"google.golang.org/grpc"
 	mainpb "grpc_stream_server/proto/gen"
 	"io"
 	"log"
 	"net"
+	"os"
+	"strings"
 	"time"
 )
 
@@ -44,6 +48,42 @@ func (s *server) SendNumbers(stream mainpb.Calculate_SendNumbersServer) error {
 		log.Println(req.GetNumber())
 		sum += req.GetNumber()
 	}
+}
+
+func (s *server) Chat(stream mainpb.Calculate_ChatServer) error {
+	reader := bufio.NewReader(os.Stdin)
+
+	for {
+		// Receiving values/messages from stream
+		req, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalln(err)
+		}
+		log.Println("Received Message:", req.GetMessage())
+
+		// Read input from the terminal
+		fmt.Print("Enter response: ")
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			return err
+		}
+
+		input = strings.TrimSpace(input)
+
+		response := &mainpb.ChatMessage{
+			Message: input,
+		}
+		// Sending data/messages/values through the stream
+		err = stream.Send(response)
+		if err != nil {
+			return err
+		}
+	}
+	fmt.Println("Returning control")
+	return nil
 }
 
 func main() {
