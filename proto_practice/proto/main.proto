@@ -14,7 +14,7 @@ service Greeter {
 
 message HelloRequest {
   reserved 15, 9 to 11;
-  optional string name = 1;
+  string name = 5  [deprecated = true];
   repeated int32 age = 2;
 }
 
