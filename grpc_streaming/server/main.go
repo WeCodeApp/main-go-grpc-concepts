@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	mainpb "grpc_stream_server/proto/gen"
 	"io"
 	"log"
@@ -15,6 +17,10 @@ import (
 
 type server struct {
 	mainpb.UnimplementedCalculateServer
+}
+
+func (s *server) Add(ctx context.Context, req *mainpb.AddRequest) (*mainpb.AddResponse, error) {
+	return &mainpb.AddResponse{Sum: req.A + req.B}, nil
 }
 
 func (s *server) GenerateFibonacci(req *mainpb.FibonacciRequest, stream mainpb.Calculate_GenerateFibonacciServer) error {
@@ -95,6 +101,9 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	mainpb.RegisterCalculateServer(grpcServer, &server{})
+
+	// Enable reflection service on gRPC server.
+	reflection.Register(grpcServer)
 
 	log.Println("Server started on port: ", port)
 	err = grpcServer.Serve(lis)

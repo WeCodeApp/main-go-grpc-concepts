@@ -1,0 +1,12 @@
+{
+    "proto": "/Users/shairayvonnecruz/Documents/projects/go/demo-lessons/go-grpc-concepts/grpc_gateway/proto/main.proto",
+    "call": "mainapi.Greeter.Greet",
+    "concurrency": 100,
+    "data": { "name": "JohnDoe" },
+    "max-duration": "20s",
+    "host": "localhost:50051",
+    "cert": "/Users/shairayvonnecruz/Documents/projects/go/demo-lessons/go-grpc-concepts/grpc_gateway/cert.pem",
+    "key": "/Users/shairayvonnecruz/Documents/projects/go/demo-lessons/go-grpc-concepts/grpc_gateway/key.pem",
+    "cacert": "/Users/shairayvonnecruz/Documents/projects/go/demo-lessons/go-grpc-concepts/grpc_gateway/cert.pem",
+    "root-cert": "/Users/shairayvonnecruz/Documents/projects/go/demo-lessons/go-grpc-concepts/grpc_gateway/cert.pem"
+}
